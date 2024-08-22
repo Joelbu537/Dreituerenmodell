@@ -11,11 +11,25 @@ class Program
     static long AttemptCount = 0;
     static string Accuracy = "0";
     static DateTime beginning = DateTime.Now;
+    static int Mode = 0;
     static void Main(string[] args)
     {
         Console.Title = "Dreitürenmodell";
-        Console.Write("Drücken Sie eine beliebige Taste um zu beginnen");
-        Console.ReadKey();
+        int chosen = 0;
+        while(chosen != 1 && chosen != 2)
+        {
+            Console.Clear();
+            Console.WriteLine("Modus auswählen");
+            Console.WriteLine("[1] Schnell (Empfohlen)");
+            Console.WriteLine("[2] Anschaulich");
+            char key = Console.ReadKey().KeyChar;
+            try
+            {
+                chosen = Convert.ToInt32(key.ToString());
+                Mode = chosen;
+            }
+            catch { }
+        }
         Thread displayThread = new Thread(DisplayMethod);
         Thread workThread = new Thread(WorkMethod);
         displayThread.Start();
@@ -112,8 +126,11 @@ class Program
             {
                 SuccessCount++;
             }
-            //Thread.Sleep(1000);
-            //Thread.Sleep(rnd.Next(100));
+            if(Mode == 2)
+            {
+                Thread.Sleep(rnd.Next(300));
+            }
+            
         }
     }
 }
